@@ -5,7 +5,7 @@
 Stately.js is a JavaScript based finite-state machine (FSM) engine for Node.js
 and the browser.
 
-### Differenties
+#### Differenties
 
 * Add `oninter` and `onleave` shorthands to `statesObject` config.
 * Make auto initializable.
