@@ -5,6 +5,14 @@
 Stately.js is a JavaScript based finite-state machine (FSM) engine for Node.js
 and the browser.
 
+### Differenties
+
+* Add `oninter` and `onleave` shorthands to `statesObject` config.
+* Make auto initializable.
+* Rename `Stately.machine` by `Stately.create`.
+ 
+Credit to [fschaefer](https://github.com/fschaefer/).
+
 ## Installation
 
 In Node.js you can install Stately.js with `npm`:
@@ -72,6 +80,9 @@ var machine = Stately.create({
     'STATE0': {
         event: function () {
             ...
+        },
+        oninter: function(){ //< a-x- addition
+            console.log('I\'m ready!');
         }
     },
     'STATE1': {
