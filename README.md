@@ -50,7 +50,7 @@ var machine = new Stately(statesObject, initialStateName);
 or the factory method:
 
 ```js
-var machine = Stately.machine(statesObject, initialStateName);
+var machine = Stately.create(statesObject, initialStateName);
 ```
 
 Both will return a new `stateMachine` object, with all events from all states
@@ -68,7 +68,7 @@ The attached `stateObject` objects model the machines states with the property
 names as `events` and the connected functions as `actions`:
 
 ```js
-var machine = Stately.machine({
+var machine = Stately.create({
     'STATE0': {
         event: function () {
             ...
@@ -99,7 +99,7 @@ If no immediate `action` needs to be declared, the desired transition `state`
 can be attached to the `event` as string directly:
 
 ```js
-var machine = Stately.machine({
+var machine = Stately.create({
     'STATE0': {
         'event':        /* => */ 'STATE1'
     },
@@ -245,7 +245,7 @@ events. Hook functions have the same signature as notifications bound with
 ### Door
 
 ```js
-var door = Stately.machine({
+var door = Stately.create({
     'OPEN': {
         'close':  /* => */ 'CLOSED'
     },
@@ -301,7 +301,7 @@ console.log(door.getMachineState() === 'BROKEN');      // true;
 ### Radio
 
 ```js
-var radio = Stately.machine({
+var radio = Stately.create({
     'STOPPED': {
         play: function () {
             return this.PLAYING;
@@ -351,7 +351,7 @@ radio.play().pause().play().pause().stop();
 ### Radio (more declarative)
 
 ```js
-var radio = Stately.machine({
+var radio = Stately.create({
     'STOPPED': {
         'play': /* => */ 'PLAYING'
     },
