@@ -223,6 +223,12 @@
 
                         eventValue = stateMachine;
 
+                    } else if (typeof eventValue === 'string') {
+
+                        nextState = stateStore[eventValue];
+
+                        eventValue = stateMachine;
+
                     } else if (toString.call(eventValue) === '[object Object]') {
 
                         nextState = (eventValue === stateStore ? currentState : eventValue);
@@ -254,6 +260,14 @@
             if (statesObject.hasOwnProperty(stateName)) {
 
                 stateStore[stateName] = statesObject[stateName];
+                if(stateStore[stateName].onenter) {
+                    stateMachine['on'+stateName] = stateStore[stateName].onenter.bind(stateMachine);
+                    delete stateStore[stateName].onenter;
+                }
+                if(stateStore[stateName].onleave) {
+                    stateMachine['onleave'+stateName] = stateStore[stateName].onleave.bind(stateMachine);
+                    delete stateStore[stateName].onleave;
+                }
 
                 for (var eventName in stateStore[stateName]) {
 
@@ -296,10 +310,12 @@
             throw new InvalidStateError('Stately.js: Invalid initial state.');
         }
 
+        (stateMachine['on'+currentState.name] || function(){})(); // init
+
         return stateMachine;
     }
 
-    Stately.machine = function machine(statesObject, initialStateName) {
+    Stately.create = function machine(statesObject, initialStateName) {
         return new Stately(statesObject, initialStateName);
     };
 
